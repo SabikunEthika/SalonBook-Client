@@ -1,3 +1,3 @@
-import Link from "next/link";
+import { AuthForm } from "@/components/AuthForm";
 import { SiteHeader } from "@/components/SiteHeader";
-export default function SignUpPage() { return <><SiteHeader /><main className="auth-page"><section><p className="eyebrow">A little time for you</p><h1>Let&apos;s get <em>started.</em></h1><p>Create an account to request appointments and keep every detail in one place.</p><form><label>Full name<input placeholder="Your full name" /></label><label>Email address<input type="email" placeholder="you@example.com" /></label><label>Password<input type="password" placeholder="At least 6 characters" /></label><button className="button" type="button">Create account <span>→</span></button></form><p className="auth-switch">Already have an account? <Link href="/sign-in">Sign in</Link></p></section></main></>; }
+export default function SignUpPage() { return <><SiteHeader /><main className="auth-page"><section><p className="eyebrow">A little time for you</p><h1>Let&apos;s get <em>started.</em></h1><p>Create an account to request appointments and keep every detail in one place.</p><AuthForm mode="sign-up" /></section></main></>; }
