@@ -1,0 +1,1 @@
+export default function ServicesLoading() { return <main className="browse-page"><p className="eyebrow">Loading services</p><div className="skeleton-grid">{Array.from({ length: 6 }, (_, index) => <div className="skeleton-card" key={index} />)}</div></main>; }
