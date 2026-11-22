@@ -32,3 +32,11 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
 }
 
 export async function signOut() { return authRequest("/sign-out", {}); }
+
+export async function uploadImage(file: File): Promise<string> {
+  const body = new FormData(); body.append("image", file);
+  const response = await fetch(`${apiUrl}/api/uploads/image`, { method: "POST", credentials: "include", body });
+  const data: unknown = await response.json().catch(() => null);
+  if (!response.ok || !data || typeof data !== "object" || !("data" in data) || !data.data || typeof data.data !== "object" || !("url" in data.data) || typeof data.data.url !== "string") throw new Error("Could not upload that image.");
+  return data.data.url;
+}
