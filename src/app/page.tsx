@@ -1,69 +1,15 @@
 import Image from "next/image";
+import Link from "next/link";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
+import { ServiceCard } from "@/components/ServiceCard";
+import { categories, demoServices } from "@/data/services";
 
 export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+  return <><SiteHeader /><main>
+    <section className="hero"><div className="hero-copy"><p className="eyebrow">Your time. Your glow.</p><h1>Care that looks<br /><em>like you.</em></h1><p className="hero-text">Book a moment of care with skilled professionals, thoughtful treatments, and a salon experience made around you.</p><Link href="/services" className="button">Explore salon services <span>→</span></Link><div className="hero-note"><span className="avatar-stack"><i>J</i><i>A</i><i>M</i></span><p><b>4.9 / 5</b> from 2,000+ happy guests</p></div></div><div className="hero-image"><Image src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1500&q=90" alt="Hair stylist creating a beautiful haircut" fill priority sizes="(max-width: 850px) 100vw, 50vw" /><div className="hero-badge"><span>Since</span><b>2012</b><span>in self-care</span></div></div></section>
+    <section className="section" id="services"><div className="section-heading"><div><p className="eyebrow">Loved by our guests</p><h2>Small rituals.<br /><em>Big difference.</em></h2></div><Link href="/services" className="text-link">See all services <span>→</span></Link></div><div className="services-grid">{demoServices.slice(0, 6).map((service) => <ServiceCard key={service.id} service={service} />)}</div></section>
+    <section className="category-section"><div><p className="eyebrow">Find your ritual</p><h2>What are you in<br /><em>the mood for?</em></h2></div><div className="category-list">{categories.map((category, index) => <Link key={category} href={`/services?category=${encodeURIComponent(category)}`}><span>0{index + 1}</span>{category}<b>↗</b></Link>)}</div></section>
+    <section className="experience" id="experience"><div className="experience-image"><Image src="https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=1200&q=85" alt="Relaxing salon treatment" fill sizes="(max-width: 850px) 100vw, 50vw" /></div><div className="experience-copy"><p className="eyebrow">The SalonBook way</p><h2>Made for the<br /><em>unhurried moment.</em></h2><p>From your first consultation to your final touch, every detail is designed to make you feel at home in your own skin.</p><div className="metrics"><div><strong>12+</strong><span>Years of care</span></div><div><strong>30k</strong><span>Appointments booked</span></div><div><strong>18</strong><span>Expert artists</span></div></div><Link href="/services" className="button button-light">Find your service <span>→</span></Link></div></section>
+  </main><SiteFooter /></>;
 }
