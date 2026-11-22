@@ -20,3 +20,15 @@ export async function authRequest(path: string, body?: Record<string, string>) {
 export async function getSession(): Promise<{ user: SessionUser } | null> {
   return authRequest("/get-session") as Promise<{ user: SessionUser } | null>;
 }
+
+export async function apiRequest<T>(path: string, options: RequestInit = {}): Promise<T> {
+  const response = await fetch(`${apiUrl}${path}`, { credentials: "include", ...options, headers: { "content-type": "application/json", ...options.headers } });
+  const data: unknown = await response.json().catch(() => null);
+  if (!response.ok) {
+    const message = typeof data === "object" && data && "message" in data && typeof data.message === "string" ? data.message : "We could not complete that request. Please try again.";
+    throw new Error(message);
+  }
+  return data as T;
+}
+
+export async function signOut() { return authRequest("/sign-out", {}); }
