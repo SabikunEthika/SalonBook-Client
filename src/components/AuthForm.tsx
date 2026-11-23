@@ -25,6 +25,7 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
     setError(""); setIsSubmitting(true);
     try {
       await authRequest(isSignUp ? "/sign-up/email" : "/sign-in/email", isSignUp ? { name, email, password } : { email, password });
+      window.dispatchEvent(new Event("salonbook:auth-change"));
       router.replace("/dashboard"); router.refresh();
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Something went wrong.");
