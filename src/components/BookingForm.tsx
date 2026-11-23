@@ -1,0 +1,11 @@
+"use client";
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { getSession } from "@/lib/auth-api";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
+const slots = ["10:00 AM", "11:30 AM", "1:00 PM", "2:30 PM", "4:00 PM", "5:30 PM", "7:00 PM"];
+export function BookingForm({ serviceId }: { serviceId: string }) {
+  const router = useRouter(); const [message, setMessage] = useState(""); const [loading, setLoading] = useState(false);
+  async function book(event: FormEvent<HTMLFormElement>) { event.preventDefault(); setLoading(true); setMessage(""); try { const session = await getSession(); if (!session?.user) { router.push(`/sign-in?redirect=/services/${serviceId}`); return; } if (session.user.role !== "customer") throw new Error("Only customer accounts can request appointments."); const form = new FormData(event.currentTarget); const response = await fetch(`${apiUrl}/api/appointments`, { method: "POST", credentials: "include", headers: { "content-type": "application/json" }, body: JSON.stringify({ serviceId, appointmentDate: form.get("appointmentDate"), timeSlot: form.get("timeSlot"), message: form.get("message") }) }); const data = await response.json(); if (!response.ok) throw new Error(data.message ?? "We could not create that appointment."); setMessage("Appointment request sent. You can track it in your dashboard."); event.currentTarget.reset(); } catch (error) { setMessage(error instanceof Error ? error.message : "Something went wrong."); } finally { setLoading(false); } }
+  return <form className="booking-form" onSubmit={book}><label>Date<input name="appointmentDate" type="date" required min={new Date().toISOString().slice(0, 10)} /></label><label>Available time<select name="timeSlot" required defaultValue=""><option value="" disabled>Select a time</option>{slots.map((slot) => <option key={slot}>{slot}</option>)}</select></label><label>A note for your stylist <textarea name="message" maxLength={500} placeholder="Optional" /></label>{message ? <p className="booking-message">{message}</p> : null}<button className="button" disabled={loading}>{loading ? "Sending…" : "Request appointment"} <span>→</span></button></form>;
+}
