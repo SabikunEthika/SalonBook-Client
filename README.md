@@ -1,47 +1,44 @@
-# SalonBook - Client
+# SalonBook Client
 
-Frontend application for SalonBook, a salon appointment booking platform.
-
-## Overview
-
-SalonBook provides a responsive interface for customers to discover salon
-services, request appointments, manage bookings, and complete payments.
-
-Administrators can manage salon services, appointments, customers, and transactions.
-
-## Technology Stack
-
-- Next.js
-- TypeScript
-- Tailwind CSS
-- shadcn/ui
-- Better Auth
-- React Hook Form
-- Zod
-- Sonner
+Responsive Next.js frontend for discovering salon services, requesting appointments, managing dashboards, and paying for confirmed bookings.
 
 ## Features
 
-- Responsive homepage
-- Service browsing and search
-- Category filtering and price sorting
-- Authentication
-- Customer dashboard
-- Admin dashboard
-- Appointment booking
-- Stripe payment integration
-- Profile management
+- Salon homepage, service search, category filters, and price sorting
+- Authenticated service details and customer appointment booking
+- Separate customer and administrator dashboards
+- Service, appointment, user, profile, and transaction management
+- Stripe Checkout redirects and webhook-aware payment status
+- Responsive layout, loading states, accessible inline errors, and global toast notifications
 
-## Environment Variables
+## Stack
 
-See `.env.example` for required environment variable names.
+Next.js, React, TypeScript, CSS, Better Auth, Express REST API, Stripe, MongoDB, ImgBB.
 
-Never commit actual secrets or `.env` files.
+## Local setup
 
-## Installation
+```bash
+npm install
+copy .env.example .env.local # Windows
+# cp .env.example .env.local # macOS/Linux
+npm run dev
+```
 
-Installation and execution instructions will be added as development progresses.
+The client runs on `http://localhost:3000` and expects the API at `NEXT_PUBLIC_API_URL`.
 
-## Repository
+## Environment variables
 
-https://github.com/SabikunEthika/SalonBook-Client
+Set this name only; never commit the value:
+
+`NEXT_PUBLIC_API_URL`
+
+For production, set it to the deployed server URL, for example `https://your-api.example.com`.
+
+## Production deployment
+
+Deploy the client repository to Vercel with the project root set to this repository. Use `npm run build` as the build command, keep the default Next.js output, and add `NEXT_PUBLIC_API_URL` in the Production environment. Redeploy after changing environment variables. Verify `/`, `/services`, `/sign-in`, and `/dashboard` after deployment.
+
+## Repositories
+
+- Client: https://github.com/SabikunEthika/SalonBook-Client
+- Server: https://github.com/SabikunEthika/SalonBook-Server
