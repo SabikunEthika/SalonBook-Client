@@ -7,6 +7,7 @@ import { getSession, signOut, type SessionUser } from "@/lib/auth-api";
 import { AppointmentPanel } from "@/components/AppointmentPanel";
 import { ProfilePanel } from "@/components/ProfilePanel";
 import { CustomerPanel } from "@/components/CustomerPanel";
+import { ServiceAdminPanel } from "@/components/ServiceAdminPanel";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -28,5 +29,5 @@ export default function DashboardPage() {
   async function handleSignOut() { try { await signOut(); } finally { router.replace("/"); } }
 
   if (!user) return <main className="page-loader"><span>✦</span><p>{message}</p></main>;
-  return <main className="dashboard-page"><aside><Link className="brand" href="/"><span>✦</span> SalonBook</Link><p className="eyebrow">{user.role} dashboard</p><nav><a href="#overview">Overview</a><a href="#appointments">Appointments</a>{user.role === "admin" ? <a href="#customers">Customers</a> : null}<a href="#profile">My profile</a></nav><button className="sidebar-logout" onClick={() => void handleSignOut()}>Log out</button></aside><section><div id="overview"><p className="eyebrow">Welcome back</p><h1>Hello, {user.name.split(" ")[0]}.</h1><p className="dashboard-lead">Keep track of every appointment request and its confirmation status in one place.</p><div className="dashboard-cards"><article><span>Account type</span><strong>{user.role}</strong><p>{user.email}</p></article></div></div><div id="appointments"><AppointmentPanel user={user} /></div>{user.role === "admin" ? <div id="customers"><CustomerPanel /></div> : null}<ProfilePanel user={user} /></section></main>;
+  return <main className="dashboard-page"><aside><Link className="brand" href="/"><span>✦</span> SalonBook</Link><p className="eyebrow">{user.role} dashboard</p><nav><a href="#overview">Overview</a><a href="#appointments">Appointments</a>{user.role === "admin" ? <><a href="#services-admin">Services</a><a href="#customers">Customers</a></> : null}<a href="#profile">My profile</a></nav><button className="sidebar-logout" onClick={() => void handleSignOut()}>Log out</button></aside><section><div id="overview"><p className="eyebrow">Welcome back</p><h1>Hello, {user.name.split(" ")[0]}.</h1><p className="dashboard-lead">Keep track of every appointment request and its confirmation status in one place.</p><div className="dashboard-cards"><article><span>Account type</span><strong>{user.role}</strong><p>{user.email}</p></article></div></div><div id="appointments"><AppointmentPanel user={user} /></div>{user.role === "admin" ? <><ServiceAdminPanel /><div id="customers"><CustomerPanel /></div></> : null}<ProfilePanel user={user} /></section></main>;
 }
