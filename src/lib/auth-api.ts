@@ -12,6 +12,7 @@ export async function authRequest(path: string, body?: Record<string, string>) {
   const data: unknown = await response.json().catch(() => null);
   if (!response.ok) {
     const message = typeof data === "object" && data && "message" in data && typeof data.message === "string" ? data.message : "We could not complete that request. Please try again.";
+    if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent("salonbook:toast", { detail: { message, tone: "error" } }));
     throw new Error(message);
   }
   return data;
@@ -26,6 +27,7 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
   const data: unknown = await response.json().catch(() => null);
   if (!response.ok) {
     const message = typeof data === "object" && data && "message" in data && typeof data.message === "string" ? data.message : "We could not complete that request. Please try again.";
+    if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent("salonbook:toast", { detail: { message, tone: "error" } }));
     throw new Error(message);
   }
   return data as T;

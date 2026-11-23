@@ -34,6 +34,10 @@ a { color: inherit; text-decoration: none; }
 .detail-copy h1, .auth-page h1, .not-found h1, .dashboard-page h1 { text-wrap: balance; }
 .detail-copy h1, .auth-page h1, .not-found h1 { letter-spacing: -1.5px; line-height: 1.08; }
 .dashboard-page h1 { letter-spacing: -1px; line-height: 1.08; }
+.toast-viewport { position: fixed; right: 20px; bottom: 20px; z-index: 50; display: grid; gap: 10px; width: min(360px, calc(100vw - 40px)); pointer-events: none; }
+.toast { padding: 14px 16px; border: 1px solid var(--line); border-left: 4px solid var(--muted); background: #fff; color: var(--ink); box-shadow: 0 12px 30px #26332a1f; font-size: 13px; line-height: 1.45; }
+.toast-success { border-left-color: #2d6538; }.toast-error { border-left-color: #b7433a; }.toast-info { border-left-color: var(--pink); }
+.profile-menu { position: relative; }.profile-trigger { cursor: pointer; color: var(--muted); font-size: 13px; list-style: none; }.profile-trigger::-webkit-details-marker { display: none; }.profile-trigger::after { content: "⌄"; margin-left: 6px; color: var(--pink); }.profile-dropdown { position: absolute; top: calc(100% + 12px); right: 0; z-index: 20; display: grid; min-width: 150px; gap: 4px; padding: 8px; border: 1px solid var(--line); background: #fff; box-shadow: 0 12px 30px #26332a1f; }.profile-dropdown a, .profile-dropdown .header-logout { padding: 8px 10px; text-align: left; font-size: 13px; }.profile-dropdown a:hover, .profile-dropdown .header-logout:hover { background: var(--cream); }
 .appointment-list article > div:first-child, .customer-list article > div:first-child, .service-admin-list article > div:first-child, .transaction-list article > div:first-child { min-width: 0; }
 .appointment-list article p, .customer-list article p, .service-admin-list article p, .transaction-list article p { overflow-wrap: anywhere; }
 .site-header nav, .dashboard-page aside nav a { line-height: 1.4; }
