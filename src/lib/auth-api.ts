@@ -35,7 +35,7 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
 
 export async function signOut() { return authRequest("/sign-out", {}); }
 
-export async function signInWithGoogle(callbackURL = "/dashboard") {
+export async function signInWithGoogle(callbackURL = `${window.location.origin}/dashboard`) {
   const response = await fetch(`${apiUrl}/api/auth/sign-in/social`, { method: "POST", headers: { "content-type": "application/json" }, credentials: "include", body: JSON.stringify({ provider: "google", callbackURL }) });
   const data: unknown = await response.json().catch(() => null);
   if (!response.ok || !data || typeof data !== "object" || !("url" in data) || typeof data.url !== "string") {
